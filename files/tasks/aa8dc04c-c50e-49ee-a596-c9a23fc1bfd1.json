@@ -1,0 +1,19 @@
+{
+    "module": {
+        "name": "module_1",
+        "params": {
+            "time1": 100,
+            "time2": 200
+        }
+    },
+    "task": {
+        "id": "aa8dc04c-c50e-49ee-a596-c9a23fc1bfd1",
+        "type": "Recurring",
+        "cron_expression": "*/1 * * * *",
+        "is_immediately_run": true,
+        "status": "Pause",
+        "state": {
+            "i": 16
+        }
+    }
+}
