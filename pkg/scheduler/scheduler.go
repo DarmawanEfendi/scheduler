@@ -316,6 +316,11 @@ func (s *Scheduler) CancelTask(taskId string, forceDelete bool) (*Task, error) {
 
 	task.mutex.Lock()
 	defer task.mutex.Unlock()
+
+	if !task.CanCancel() {
+		return nil, fmt.Errorf("Task %s failed to move cancel state", taskId)
+	}
+
 	task.SetCancel()
 
 	s.removeJob(task)
@@ -345,6 +350,11 @@ func (s *Scheduler) PauseTask(taskId string) (*Task, error) {
 	}
 
 	task.mutex.Lock()
+
+	if !task.CanPause() {
+		return nil, fmt.Errorf("Task %s failed to move pause state", taskId)
+	}
+
 	if task.IsResume() || task.IsNew() {
 		// if resume, the task stil waiting time to run, so we need to force add this line.
 		task.taskReachFinalStep = true
@@ -377,6 +387,10 @@ func (s *Scheduler) ResumeTask(taskId string) (*Task, error) {
 
 	task.mutex.Lock()
 	defer task.mutex.Unlock()
+
+	if !task.CanResume() {
+		return nil, fmt.Errorf("Task %s failed to move resume state", taskId)
+	}
 
 	runImmediately := true
 	if task.IsRecurring() {

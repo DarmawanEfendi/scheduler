@@ -212,3 +212,15 @@ func (t *Task) GetModuleName() string {
 func (t *Task) GetModuleParams() map[string]interface{} {
 	return t.moduleParams
 }
+
+func (t *Task) CanResume() bool {
+	return t.taskStatus == TaskPauseStatus && t.job == nil
+}
+
+func (t *Task) CanPause() bool {
+	return t.job != nil && t.taskStatus != TaskPauseStatus
+}
+
+func (t *Task) CanCancel() bool {
+	return t.job != nil && t.taskStatus != TaskCancelStatus
+}
