@@ -34,7 +34,7 @@ type GCS struct {
 func New(isRunEmulator bool) (*GCS, error) {
 	options := make([]option.ClientOption, 0)
 	if isRunEmulator {
-		options = append(options, option.WithEndpoint("http://fake-gcs-server:4443/storage/v1/"))
+		options = append(options, option.WithEndpoint("http://localhost:4443/storage/v1/"))
 		options = append(options, option.WithoutAuthentication())
 		options = append(options, option.WithHTTPClient(&http.Client{
 			Transport: &HostFixRoundTripper{&http.Transport{}},

@@ -29,7 +29,7 @@ func (m *Module2) validateFuncParams(params map[string]interface{}) (map[string]
 	return validateFuncParams(params, m.funcParams)
 }
 
-func (*Module2) createFunc() interface{} {
+func (*Module2) createFunc() func(taskParams *scheduler.TaskParams, userParams map[string]interface{}) {
 	return func(taskParams *scheduler.TaskParams, userParams map[string]interface{}) {
 		fmt.Printf("[module_2] State now: %v\n", taskParams.State)
 		for i := 0; i < 100; i++ {

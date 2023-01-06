@@ -1,10 +1,14 @@
 package modules
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/DarmawanEfendi/scheduler/pkg/scheduler"
+)
 
 type IModules interface {
 	Call(params map[string]interface{}) (interface{}, map[string]interface{}, error) // func, params
-	createFunc() interface{}
+	createFunc() func(taskParams *scheduler.TaskParams, userParams map[string]interface{})
 	validateFuncParams(params map[string]interface{}) (map[string]interface{}, error)
 }
 
